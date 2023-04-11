@@ -5,29 +5,22 @@ import TodoForm from './components/TodoForm';
 import './Todo.css';
 import Modal from './components/modal';
 
-const SAVED_ITEMS='savedItems'
 function Todo() {
 
     const [showModal, setShowModal] = useState(false)
-    const [items, setItems] = useState([])
+    const [items, setItems] = useState(JSON.parse(localStorage.getItem('items')));
 
-    useEffect(()=>{
-        let savedItem= JSON.parse(localStorage.getItem(items))
-        if (savedItem){
-            setItems(savedItem);
-        }
-    },[])
 
-    useEffect(()=>{
-        localStorage.setItem(SAVED_ITEMS,JSON.stringify(items))
-    },[items])
+    useEffect(() => {
 
+       localStorage.setItem('items', JSON.stringify(items));
+       
+    }, [items])
 
     function onAddItem(text) {
         let it = new Item(text)
         setItems([...items, it])
         OnhideModal();
-
     }
 
     function onItemdelete(item) {
